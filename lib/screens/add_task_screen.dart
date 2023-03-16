@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:todoey/models/task.dart';
+import 'package:todoey/widgets/tasks_list.dart';
 
 class AddTask extends StatelessWidget {
-  const AddTask({super.key});
+  final void Function(String) tempCallback;
+  AddTask({required this.tempCallback});
 
+  String newTask = '';
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -21,12 +25,17 @@ class AddTask extends StatelessWidget {
             TextField(
               autofocus: true,
               textAlign: TextAlign.center,
+              onChanged: (newText) {
+                newTask = newText;
+              },
             ),
             SizedBox(
               height: 10.0,
             ),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                tempCallback(newTask);
+              },
               child: Text(
                 'Add',
                 style: TextStyle(fontSize: 20),
