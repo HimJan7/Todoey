@@ -1,22 +1,14 @@
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:todoey/main.dart';
 import 'package:todoey/widgets/tasks_list.dart';
 import 'package:flutter/material.dart';
 import 'package:todoey/screens/add_task_screen.dart';
 import 'package:todoey/models/task.dart';
+import 'package:provider/provider.dart';
+import 'package:todoey/models/listForProvider.dart';
 
-class TasksScreen extends StatefulWidget {
-  @override
-  State<TasksScreen> createState() => _TasksScreenState();
-}
-
-class _TasksScreenState extends State<TasksScreen> {
-  List<Task> tasks = [
-    Task(name: 'Buy Milk', isDone: false),
-    Task(name: 'Buy Eggs', isDone: false),
-    Task(name: 'Buy Bread', isDone: false),
-  ];
-
+class TasksScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,9 +19,9 @@ class _TasksScreenState extends State<TasksScreen> {
             context: context,
             builder: (context) => AddTask(
               tempCallback: (String newValue) {
-                setState(() {
-                  tasks.add(Task(name: newValue, isDone: false));
-                });
+                context
+                    .read<taskList>()
+                    .updateList(Task(name: newValue, isDone: false));
 
                 Navigator.pop(context);
               },
@@ -68,7 +60,7 @@ class _TasksScreenState extends State<TasksScreen> {
                   ),
                 ),
                 Text(
-                  '${tasks.length} Tasks',
+                  '${Provider.of<taskList>(context).getLength} Tasks',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 18.0,
@@ -85,7 +77,7 @@ class _TasksScreenState extends State<TasksScreen> {
                   topLeft: Radius.circular(20),
                   topRight: Radius.circular(20.0)),
             ),
-            child: TasksList(tasks: tasks),
+            child: TasksList(),
           )),
         ],
       ),

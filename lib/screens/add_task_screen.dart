@@ -34,7 +34,9 @@ class AddTask extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () {
-                tempCallback(newTask);
+                if (newTask.isNotEmpty) {
+                  tempCallback(newTask);
+                }
               },
               child: Text(
                 'Add',
