@@ -19,6 +19,7 @@ class TasksList extends StatelessWidget {
               taskCallback: (newValue) {
                 context.read<taskList>().toggleDone(index);
               },
+              index: index,
             );
           }),
     );

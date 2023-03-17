@@ -20,6 +20,11 @@ class taskList extends ChangeNotifier {
     return _tasks[index].isDone;
   }
 
+  void deleteElement(int index) {
+    _tasks.remove(_tasks[index]);
+    notifyListeners();
+  }
+
   void updateList(Task newtask) {
     _tasks.add(newtask);
     notifyListeners();
